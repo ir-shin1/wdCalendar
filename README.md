@@ -30,3 +30,8 @@ www.web-delicious.com
 jQuery is a new kind of JavaScript Library. http://jquery.com/
 wdCalendar Library. base script from http://www.web-delicious.com
 
+
+## Nexts Steps
+
+A code update is needed in order to comply with current versions of php, jQuery and browsers
+
