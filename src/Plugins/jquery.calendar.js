@@ -40,7 +40,7 @@
                 "q+": Math.floor((this.getMonth() + 3) / 3),
                 "w": "0123456".indexOf(this.getDay()),
                 "W": __WDAY[this.getDay()],
-                "L+": __MonthName[this.getMonth()] //non-standard
+                "Z": __MonthName[this.getMonth()] //non-standard
             };
             if (/(y+)/.test(format)) {
                 format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));

@@ -2,10 +2,10 @@ var i18n = $.extend({}, i18n || {}, {
     xgcalendar: {
         dateformat: {
             "fulldaykey": "MMddyyyy",
-            "fulldayshow": "L d yyyy",
+            "fulldayshow": "Z d yyyy",
             "fulldayvalue": "M/d/yyyy",
             "Md": "W M/d",
-            "Md3": "L d",
+            "Md3": "Z d",
             "separator": "/",
             "year_index": 2,
             "month_index": 0,
