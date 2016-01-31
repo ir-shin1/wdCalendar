@@ -25,7 +25,7 @@
         $(document).ready(function() {     
            var view="week";          
            
-            var DATA_FEED_URL = "wdc/php/datafeed.php";
+            var DATA_FEED_URL = "php/datafeed.php";
             var op = {
                 view: view,
                 theme:3,
@@ -216,17 +216,10 @@
 
       <div id="calhead" style="padding-left:1px;padding-right:1px;">          
             <div class="cHead"><div class="ftitle">Mon calendrier</div>
-            <div id="loadingpannel" class="ptogtitle loadicon" style="display: none;">Chargeùent...</div>
+            <div id="loadingpannel" class="ptogtitle loadicon" style="display: none;">Chargement...</div>
              <div id="errorpannel" class="ptogtitle loaderror" style="display: none;">Désolé, impossible de charger les données...</div>
-            </div>          
-            
+            </div>      
             <div id="caltoolbar" class="ctoolbar">
-              <div id="faddbtn" class="fbutton">
-                <div><span title='Cliquer pour créer nouvel évènement' class="addcal">
-
-                Nouvel evnt                
-                </span></div>
-            </div>
             <div class="btnseparator"></div>
              <div id="showtodaybtn" class="fbutton">
                 <div><span title="Cliquer pour revenir à aujourd'hui " class="showtoday">

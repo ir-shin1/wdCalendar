@@ -1546,13 +1546,12 @@
                 if (option.quickDeleteUrl != "" && data[8] == 1 && option.readonly != true) {
                     var csbuddle = '<div id="bbit-cs-buddle" style="z-index: 180; width: 400px;visibility:hidden;" class="bubble"><table class="bubble-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="bubble-cell-side"><div id="tl1" class="bubble-corner"><div class="bubble-sprite bubble-tl"></div></div><td class="bubble-cell-main"><div class="bubble-top"></div><td class="bubble-cell-side"><div id="tr1" class="bubble-corner"><div class="bubble-sprite bubble-tr"></div></div>  <tr><td class="bubble-mid" colSpan="3"><div style="overflow: hidden" id="bubbleContent1"><div><div></div><div class="cb-root"><table class="cb-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><div id="bbit-cs-what" title="'
                     	+ i18n.xgcalendar.click_to_detail + '" class="textbox-fill-div lk" style="cursor:pointer;"></div></div></div></td></tr><tr><td class=cb-value><div id="bbit-cs-buddle-timeshow"></div></td></tr></tbody></table><div class="bbit-cs-split"><input id="bbit-cs-id" type="hidden" value=""/>[ <span id="bbit-cs-delete" class="lk">'
-                    	+ i18n.xgcalendar.i_delete + '</span> ]&nbsp; <SPAN id="bbit-cs-editLink" class="lk">'
-                    	+ i18n.xgcalendar.update_detail + ' <StrONG>&gt;&gt;</StrONG></SPAN></div></div></div></div><tr><td><div id="bl1" class="bubble-corner"><div class="bubble-sprite bubble-bl"></div></div><td><div class="bubble-bottom"></div><td><div id="br1" class="bubble-corner"><div class="bubble-sprite bubble-br"></div></div></tr></tbody></table><div id="bubbleClose2" class="bubble-closebutton"></div><div id="prong1" class="prong"><div class=bubble-sprite></div></div></div>';
+                    	+ i18n.xgcalendar.i_delete + '</span> ]&nbsp;'
+                    	+ '</SPAN></div></div></div></div><tr><td><div id="bl1" class="bubble-corner"><div class="bubble-sprite bubble-bl"></div></div><td><div class="bubble-bottom"></div><td><div id="br1" class="bubble-corner"><div class="bubble-sprite bubble-br"></div></div></tr></tbody></table><div id="bubbleClose2" class="bubble-closebutton"></div><div id="prong1" class="prong"><div class=bubble-sprite></div></div></div>';
                     var bud = $("#bbit-cs-buddle");
                     if (bud.length == 0) {
                         bud = $(csbuddle).appendTo(document.body);
                         var calbutton = $("#bbit-cs-delete");
-                        var lbtn = $("#bbit-cs-editLink");
                         var closebtn = $("#bubbleClose2").click(function() {
                             $("#bbit-cs-buddle").css("visibility", "hidden");
                         });
@@ -1586,18 +1585,6 @@
                             else {
                                 if (option.ViewCmdhandler && $.isFunction(option.ViewCmdhandler)) {
                                     option.ViewCmdhandler.call(this, $("#bbit-cs-buddle").data("cdata"));
-                                }
-                            }
-                            $("#bbit-cs-buddle").css("visibility", "hidden");
-                            return false;
-                        });
-                        lbtn.click(function(e) {
-                            if (!option.EditCmdhandler) {
-                                alert("EditCmdhandler" + i18n.xgcalendar.i_undefined);
-                            }
-                            else {
-                                if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
-                                    option.EditCmdhandler.call(this, $("#bbit-cs-buddle").data("cdata"));
                                 }
                             }
                             $("#bbit-cs-buddle").css("visibility", "hidden");
@@ -1774,13 +1761,12 @@
                 temparr.push(i18n.xgcalendar.content, ':</th><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><input id="bbit-cal-what" class="textbox-fill-input"/></div></div><div class="cb-example">');
                 temparr.push(i18n.xgcalendar.example, '</div></td></tr></tbody></table><input id="bbit-cal-start" type="hidden"/><input id="bbit-cal-end" type="hidden"/><input id="bbit-cal-allday" type="hidden"/><input id="bbit-cal-quickAddBTN" value="');
                 temparr.push(i18n.xgcalendar.create_event, '" type="button"/>&nbsp; <SPAN id="bbit-cal-editLink" class="lk">');
-                temparr.push(i18n.xgcalendar.update_detail, ' <StrONG>&gt;&gt;</StrONG></SPAN></div></div></div><tr><td><div id="bl1" class="bubble-corner"><div class="bubble-sprite bubble-bl"></div></div><td><div class="bubble-bottom"></div><td><div id="br1" class="bubble-corner"><div class="bubble-sprite bubble-br"></div></div></tr></tbody></table><div id="bubbleClose1" class="bubble-closebutton"></div><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>');
+                temparr.push('</SPAN></div></div></div><tr><td><div id="bl1" class="bubble-corner"><div class="bubble-sprite bubble-bl"></div></div><td><div class="bubble-bottom"></div><td><div id="br1" class="bubble-corner"><div class="bubble-sprite bubble-br"></div></div></tr></tbody></table><div id="bubbleClose1" class="bubble-closebutton"></div><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>');
                 var tempquickAddHanler = temparr.join("");
                 temparr = null;
                 $(document.body).append(tempquickAddHanler);
                 buddle = $("#bbit-cal-buddle");
                 var calbutton = $("#bbit-cal-quickAddBTN");
-                var lbtn = $("#bbit-cal-editLink");
                 var closebtn = $("#bubbleClose1").click(function() {
                     $("#bbit-cal-buddle").css("visibility", "hidden");
                     realsedragevent();
@@ -1853,19 +1839,6 @@
                         realsedragevent();
                         render();
                     }
-                });
-                lbtn.click(function(e) {
-                    if (!option.EditCmdhandler) {
-                        alert("EditCmdhandler" + i18n.xgcalendar.i_undefined);
-                    }
-                    else {
-                        if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
-                            option.EditCmdhandler.call(this, ['0', $("#bbit-cal-what").val(), $("#bbit-cal-start").val(), $("#bbit-cal-end").val(), $("#bbit-cal-allday").val()]);
-                        }
-                        $("#bbit-cal-buddle").css("visibility", "hidden");
-                        realsedragevent();
-                    }
-                    return false;
                 });
                 buddle.mousedown(function(e) { return false });
             }
