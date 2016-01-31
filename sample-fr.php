@@ -30,7 +30,6 @@
                 view: view,
                 theme:3,
                 showday: new Date(),
-                EditCmdhandler:Edit,
                 DeleteCmdhandler:Delete,
                 ViewCmdhandler:View,    
                 onWeekOrMonthToDay:wtd,
@@ -100,17 +99,6 @@
             {
                 $("#errorpannel").show();
             }
-            function Edit(data)
-            {
-               var eurl="edit.php?id={0}&start={2}&end={3}&isallday={4}&title={1}";   
-                if(data)
-                {
-                    var url = StrFormat(eurl,data);
-                    OpenModelWindow(url,{ width: 600, height: 400, caption:"Manage  The Calendar",onclose:function(){
-                       $("#gridcontainer").reload();
-                    }});
-                }
-            }    
             function View(data)
             {
                 var str = "";
@@ -178,11 +166,6 @@
                 $("#gridcontainer").reload();
             });
             
-            //Add a new event
-            $("#faddbtn").click(function(e) {
-                var url ="edit.php";
-                OpenModelWindow(url,{ width: 500, height: 400, caption: "Nouveau calendrier"});
-            });
             //go to today
             $("#showtodaybtn").click(function(e) {
                 var p = $("#gridcontainer").gotoDate().BcalGetOp();
