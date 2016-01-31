@@ -3,6 +3,7 @@
   * This is the main class of wdCalendar.
   */
 ; (function($) {
+    var systemDateFormat = 'M/d/yyyy';
     var __WDAY = new Array(i18n.xgcalendar.dateformat.sun, i18n.xgcalendar.dateformat.mon, i18n.xgcalendar.dateformat.tue, i18n.xgcalendar.dateformat.wed, i18n.xgcalendar.dateformat.thu, i18n.xgcalendar.dateformat.fri, i18n.xgcalendar.dateformat.sat);
     var __MonthName = new Array(i18n.xgcalendar.dateformat.jan, i18n.xgcalendar.dateformat.feb, i18n.xgcalendar.dateformat.mar, i18n.xgcalendar.dateformat.apr, i18n.xgcalendar.dateformat.may, i18n.xgcalendar.dateformat.jun, i18n.xgcalendar.dateformat.jul, i18n.xgcalendar.dateformat.aug, i18n.xgcalendar.dateformat.sep, i18n.xgcalendar.dateformat.oct, i18n.xgcalendar.dateformat.nov, i18n.xgcalendar.dateformat.dec);
     if (!Clone || typeof (Clone) != "function") {
@@ -1168,7 +1169,7 @@
                 }
                 var zone = new Date().getTimezoneOffset() / 60 * -1;
                 var param = [
-                { name: "showdate", value: dateFormat.call(option.showday, i18n.xgcalendar.dateformat.fulldayvalue) },
+                { name: "showdate", value: dateFormat.call(option.showday, systemDateFormat) },
                 { name: "viewtype", value: option.view },
 				 { name: "timezone", value: zone }
                 ];
@@ -1716,9 +1717,10 @@
                 var os = data[2];
                 var od = data[3];
                 var zone = new Date().getTimezoneOffset() / 60 * -1;
+
                 var param = [{ "name": "calendarId", value: id },
-							{ "name": "CalendarStartTime", value: dateFormat.call(start, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm") },
-							{ "name": "CalendarEndTime", value: dateFormat.call(end, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm") },
+							{ "name": "CalendarStartTime", value: dateFormat.call(start, systemDateFormat + " HH:mm") },
+							{ "name": "CalendarEndTime", value: dateFormat.call(end, systemDateFormat + " HH:mm") },
 							{ "name": "timezone", value: zone }
 						   ];
                 var d;
