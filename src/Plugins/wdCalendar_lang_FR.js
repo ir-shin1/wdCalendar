@@ -4,7 +4,7 @@ var i18n = $.extend({}, i18n || {}, {
             "fulldaykey": "ddMMyyyy",
             "fulldayshow": "d Z yyyy",
             "fulldayvalue": "d/M/yyyy",
-            "Md": "W M/d",
+            "Md": "W d/M",
             "Md3": "d Z",
             "separator": "/",
             "year_index": 2,

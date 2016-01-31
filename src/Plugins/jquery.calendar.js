@@ -1844,8 +1844,8 @@
                         }, "json");
 
                         newdata.push(-1, what);
-                        var sd = strtodate(datestart);
-                        var ed = strtodate(dateend);
+                        var sd = strtodate(datestart, true);
+                        var ed = strtodate(dateend, true);
                         var diff = DateDiff("d", sd, ed);
                         newdata.push(sd, ed, allday == "1" ? 1 : 0, diff > 0 ? 1 : 0, 0);
                         newdata.push(-1, 0, "", ""); 
@@ -1881,8 +1881,8 @@
             $("#bbit-cal-buddle-timeshow").html(dateshow);
             var calwhat = $("#bbit-cal-what").val("");
             $("#bbit-cal-allday").val(isallday ? "1" : "0");
-            $("#bbit-cal-start").val(dateFormat.call(start, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm"));
-            $("#bbit-cal-end").val(dateFormat.call(end, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm"));
+            $("#bbit-cal-start").val(dateFormat.call(start, systemDateFormat + " HH:mm"));
+            $("#bbit-cal-end").val(dateFormat.call(end, systemDateFormat + " HH:mm"));
             buddle.css({ "visibility": "visible", left: off.left, top: off.top });			
 			calwhat.blur().focus(); //add 2010-01-26 blur() fixed chrome 
             $(document).one("mousedown", function() {
@@ -1892,15 +1892,30 @@
             return false;
         }
         //format datestring to Date Type
-        function strtodate(str) {
+        function strtodate(str, system = false) {
+
+            if (system)
+            {
+                var separator = '/';
+                var dayIndex = 1;
+                var monthIndex = 0;
+                var yearIndex = 2;
+            }
+            else
+            {
+                var separator = i18n.xgcalendar.dateformat.separator;
+                var dayIndex = i18n.xgcalendar.dateformat.day_index;
+                var monthIndex = i18n.xgcalendar.dateformat.month_index;
+                var yearIndex = i18n.xgcalendar.dateformat.year_index;
+            }
 
             var arr = str.split(" ");
             var arr2 = arr[0].split(i18n.xgcalendar.dateformat.separator);
             var arr3 = arr[1].split(":");
 
-            var y = arr2[i18n.xgcalendar.dateformat.year_index];
-            var m = arr2[i18n.xgcalendar.dateformat.month_index].indexOf("0") == 0 ? arr2[i18n.xgcalendar.dateformat.month_index].substr(1, 1) : arr2[i18n.xgcalendar.dateformat.month_index];
-            var d = arr2[i18n.xgcalendar.dateformat.day_index].indexOf("0") == 0 ? arr2[i18n.xgcalendar.dateformat.day_index].substr(1, 1) : arr2[i18n.xgcalendar.dateformat.day_index];
+            var y = arr2[yearIndex];
+            var m = arr2[monthIndex].indexOf("0") == 0 ? arr2[monthIndex].substr(1, 1) : arr2[monthIndex];
+            var d = arr2[dayIndex].indexOf("0") == 0 ? arr2[dayIndex].substr(1, 1) : arr2[dayIndex];
             var h = arr3[0].indexOf("0") == 0 ? arr3[0].substr(1, 1) : arr3[0];
             var n = arr3[1].indexOf("0") == 0 ? arr3[1].substr(1, 1) : arr3[1];
             return new Date(y, parseInt(m) - 1, d, h, n);
