@@ -1,0 +1,59 @@
+<?php
+class TBL {
+  public $Id;
+  public $Subject;
+  public $Location;
+  public $Description;
+  public $StartTime;
+  public $EndTime;
+  public $IsAllDayEvent;
+  public $Color;
+  public $RecurringRule;
+}
+
+class DBConnection{
+  private $ins;
+
+  function getConnection(){
+    $this->ins = new SQLite3('/var/lib/db/wdCalendar.db');
+  }
+
+  function disConnection() {
+    $this->ins->close();
+  }
+
+  function query($sql) {
+    return $this->ins->query($sql);
+  }
+
+  function getMessage() {
+    return sqlite_error_string($this->ins->lastError());
+  }
+
+  function insertId() {
+    return $this->ins->lastInsertRowid();
+  }
+
+  function fetchObject($handle) {
+    if ($val = $handle->fetchArray()) {
+      $row = new TBL();
+      $row->Id = $val['Id'];
+      $row->Subject = $val['Subject'];
+      $row->Location = $val['Location'];
+      $row->Description = $val['Description'];
+      $row->StartTime = $val['StartTime'];
+      $row->EndTime = $val['EndTime'];
+      $row->IsAllDayEvent = $val['IsAllDayEvent'];
+      $row->Color = $val['Color'];
+      $row->RecurringRule = $val['RecurringRule'];
+      return $row;
+    } else {
+      return $val;
+    }
+  }
+
+  function escapeString($str) {
+    return $this->ins->escapeString($str);
+  }
+}
+?>
