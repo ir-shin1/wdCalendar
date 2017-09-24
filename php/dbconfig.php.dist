@@ -1,12 +1,35 @@
 <?php
 class DBConnection{
-	function getConnection(){
-	  //change to your database server/user name/password
-		mysql_connect("localhost","root","") or
-         die("Could not connect: " . mysql_error());
-    //change to your database name
-		mysql_select_db("jqcalendar") or 
-		     die("Could not select database: " . mysql_error());
-	}
+  function getConnection(){
+  //change to your database server/user name/password
+  mysql_connect("localhost","root","") or
+     die("Could not connect: " . mysql_error());
+  //change to your database name
+  mysql_select_db("jqcalendar") or 
+     die("Could not select database: " . mysql_error());
+  }
+
+  function disConnection() {
+  }
+
+  function query($sql) {
+    return mysql_query($sql);
+  }
+
+  function getMessage() {
+    return mysql_error();
+  }
+
+  function insertId() {
+    return mysql_insert_id();
+  }
+
+  function fetchObject($handle) {
+    return mysql_fetch_object($handle);
+  }
+
+  function escapeString($string) {
+    return mysql_real_escape_string($string);
+  }
 }
 ?>
