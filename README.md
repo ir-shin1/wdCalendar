@@ -19,7 +19,7 @@ $ docker pull php:5.6.31-apache
 3.2 Download wdCalendar
 
 ```
-$ get clone https://github.com/ir-shin1/wdCalendar.git
+$ git clone https://github.com/ir-shin1/wdCalendar.git
 ```
 
 3.3 Copy dbconfig.php, index.php, datafeed.php file
@@ -36,7 +36,7 @@ $ cp -p php/datafeed.db.php php/datafeed.php
 ```
 $ mkdir -pm 777 db
 $ chcon -Rt svirt_sandbox_file_t wdCalendar db
-$ docker run -d --restart=always --name calendar_sv -v $PWD:/var/lib/db -v $PWD/wdCalendar:/var/www/html -p 9080:80 php:5.6.31-apache
+$ docker run -d --restart=always --name calendar_sv -v $PWD/db:/var/lib/db -v $PWD/wdCalendar:/var/www/html -p 9080:80 php:5.6.31-apache
 $ docker exec -ti calendar_sv bash -c "echo -e \"[Date]\ndate.timezone ='Asia/Tokyo'\" >> /usr/local/etc/php/php.ini"
 ```
 
@@ -52,6 +52,8 @@ PHP timezone up
 ```
 docker restart calendar_sv
 ```
+
+3.7 Web access http://localhost:9080/
 
 4. About web-delicious.com
 We are an IT outsourcing company location in Shanghai, China.
