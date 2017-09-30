@@ -8,6 +8,7 @@ class TBL {
   public $EndTime;
   public $IsAllDayEvent;
   public $Color;
+  public $Holiday;
   public $RecurringRule;
 }
 
@@ -45,6 +46,7 @@ class DBConnection{
       $row->EndTime = $val['EndTime'];
       $row->IsAllDayEvent = $val['IsAllDayEvent'];
       $row->Color = $val['Color'];
+      $row->Holiday = $val['Holiday'];
       $row->RecurringRule = $val['RecurringRule'];
       return $row;
     } else {

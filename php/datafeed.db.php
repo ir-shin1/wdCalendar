@@ -91,9 +91,10 @@ function listCalendarByRange($sd, $ed){
         //$row->InstanceType,
         0,//Recurring event,
         $row->Color,
-        1,//editable
+        ($row->Holiday==1)?0:1,//editable
         $row->Location, 
-        ''//$attends
+        '',//$attends
+        $row->Holiday
       );
     }
   }catch(Exception $e){

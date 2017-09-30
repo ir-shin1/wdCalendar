@@ -398,7 +398,7 @@
             var days = [];
             if (l == 1) {
                 var show = dateFormat.call(startday, i18n.xgcalendar.dateformat.Md);
-                days.push({ display: show, date: startday, day: startday.getDate(), year: startday.getFullYear(), month: startday.getMonth() + 1 });
+                days.push({ display: show, date: startday, day: startday.getDate(), year: startday.getFullYear(), month: startday.getMonth() + 1, holiday: false });
                 option.datestrshow = CalDateShow(days[0].date);
                 option.vstart = days[0].date;
                 option.vend = days[0].date;
@@ -413,7 +413,7 @@
                 for (var i = w, j = 0; j < l; i = i + 1, j++) {
                     ndate = DateAdd("d", i, startday);
                     var show = dateFormat.call(ndate, i18n.xgcalendar.dateformat.Md);
-                    days.push({ display: show, date: ndate, day: ndate.getDate(), year: ndate.getFullYear(), month: ndate.getMonth() + 1 });
+                    days.push({ display: show, date: ndate, day: ndate.getDate(), year: ndate.getFullYear(), month: ndate.getMonth() + 1, holiday: false });
                 }
                 option.vstart = days[0].date;
                 option.vend = days[l - 1].date;
@@ -489,6 +489,7 @@
                 s.crossday = events[j][5] == 1;
                 s.reevent = events[j][6] == 1; //Recurring event
                 s.daystr = [s.year, s.month, s.day].join("/");
+                s.holiday = events[j][11] == 1;
                 s.st = {};
                 s.st.hour = sD.getHours();
                 s.st.minute = sD.getMinutes();
@@ -513,6 +514,9 @@
                         if (da.daystr == fE[j].daystr) {
                             deB[i].push(fE[j]);
                             dMax++;
+                            if ( fE[j].holiday ) {
+                                dayarrs[i].holiday = true;
+                            }
                         }
                         else {
                             if (i == 0 && da.date >= fE[j].event[2] && da.date <= fE[j].event[3])//first more-than-one-day event
@@ -730,10 +734,10 @@
                 // Today
                 if (istoday) {
                     ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-today\">&nbsp;</div>");
-                } else if ( i == 5 ) {
-                    ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-bg-sta\">&nbsp;</div>");
-                } else if ( i == 6 ) {
+                } else if ( dateFormat.call(dayarrs[i].date, "w") == 0 || dayarrs[i].holiday ) {
                     ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-bg-sun\">&nbsp;</div>");
+                } else if ( dateFormat.call(dayarrs[i].date, "w") == 6 ) {
+                    ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-bg-sat\">&nbsp;</div>");
                 } 
                 //var eventC = $(eventWrap);
                 //onclick=\"javascript:FunProxy('rowhandler',event,this);\"
@@ -892,6 +896,12 @@
                 }
                 B[j] = k;
             }
+            var H = {};
+            for (var k = 0; k < events.length; k++) {
+                if ( events[k][11] == 1 ) {
+                    H[dateFormat.call(events[k][2], "yyyyMMdd")] = 1;
+                }
+            }
             //var c = tc();
             eventDiv.data("mvdata", formatevents);
             for (var j = 0; j < rc; j++) {
@@ -908,10 +918,10 @@
                     if (dateFormat.call(day, "yyyyMMdd") == dateFormat.call(new Date(), "yyyyMMdd")) {
                             htb.push(" st-bg-today");
                     }
-                    if (i == 5 ) { // sta
-                        htb.push(" st-bg-sta");
-                    } else if ( i == 6 ) { // sun
+                    if ((dateFormat.call(day, "w") == 0) || (dateFormat.call(day, "yyyyMMdd") in H)) { // sun or holiday
                         htb.push(" st-bg-sun");
+                    } else if (dateFormat.call(day, "w") == 6) { // sat
+                        htb.push(" st-bg-sat");
                     }
                     htb.push("\">&nbsp;</td>");
                 }

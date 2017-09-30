@@ -9,6 +9,7 @@
          " `EndTime`       datetime      default NULL," .
          " `IsAllDayEvent` smallint(6)   NOT NULL," .
          " `Color`         varchar(200)  default NULL," .
+         " `Holiday`       smallint(6)   default 0," .
          " `RecurringRule` varchar(500)  default NULL" .
          ");";
 
