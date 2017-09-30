@@ -30,6 +30,7 @@
                 view: view,                          // カレンダーの種類（初期表示）
                 theme:3,                             // 色
                 showday: new Date(),                 // 初期表示日
+                EditCmdhandler:Edit,                 // 編集
                 DeleteCmdhandler:Delete,             // 削除処理関数名
                 ViewCmdhandler:View,                 // 表示処理関数名
                 onWeekOrMonthToDay:wtd,              // ???週日月切り替え時使用???
@@ -103,6 +104,20 @@
             {
                 $("#errorpannel").show();
             }
+
+            // 編集
+            function Edit(data)
+            {
+               var eurl="edit.php?id={0}&start={2}&end={3}&isallday={4}&title={1}";   
+                if(data)
+                {
+                    var url = StrFormat(eurl,data);
+                    OpenModelWindow(url,{ width: 600, height: 400, caption:"Manage  The Calendar",onclose:function(){
+                       $("#gridcontainer").reload();
+                    }});
+                }
+            } 
+
             // 予定表示
             function View(data)
             {
@@ -171,6 +186,12 @@
             // 更新
             $("#showreflashbtn").click(function(e){
                 $("#gridcontainer").reload();
+            });
+
+            // 新規イベントの追加
+            $("#faddbtn").click(function(e) {
+                var url ="edit.php";
+                OpenModelWindow(url,{ width: 500, height: 400, caption: "Nouveau calendrier"});
             });
 
             // 今日へ

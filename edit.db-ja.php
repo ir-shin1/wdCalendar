@@ -31,7 +31,7 @@ if($_GET["id"]){
     <script src="src/Plugins/Common.js" type="text/javascript"></script>        
     <script src="src/Plugins/jquery.form.js" type="text/javascript"></script>     
     <script src="src/Plugins/jquery.validate.js" type="text/javascript"></script>     
-    <script src="src/Plugins/datepicker_lang_US.js" type="text/javascript"></script>        
+    <script src="src/Plugins/datepicker_lang_JA.js" type="text/javascript"></script>        
     <script src="src/Plugins/jquery.datepicker.js" type="text/javascript"></script>     
     <script src="src/Plugins/jquery.dropdown.js" type="text/javascript"></script>     
     <script src="src/Plugins/jquery.colorselect.js" type="text/javascript"></script>    
@@ -107,32 +107,37 @@ if($_GET["id"]){
                 $("#stparttime").val("00:00").hide();
                 $("#etparttime").val("00:00").hide();
             }
+            // 保存
             $("#Savebtn").click(function() { $("#fmEdit").submit(); });
+            // クローズ
             $("#Closebtn").click(function() { CloseModelWindow(); });
+            // 削除
             $("#Deletebtn").click(function() {
-                 if (confirm("Are you sure to remove this event")) {  
-                    var param = [{ "name": "calendarId", value: 8}];                
+                 if (confirm("本当に予定を削除しますか?")) {  
+                    var param = [{ "name": "calendarId", value: <?php echo isset($event)?$event->Id:"0" ?>}];
                     $.post(DATA_FEED_URL + "?method=remove",
                         param,
                         function(data){
                               if (data.IsSuccess) {
-                                    alert(data.Msg); 
+                                    alert("正常終了"); 
                                     CloseModelWindow(null,true);                            
                                 }
                                 else {
-                                    alert("Error occurs.\r\n" + data.Msg);
+                                    alert("異常終了\r\n" + data.Msg);
                                 }
                         }
                     ,"json");
                 }
             });
             
-           $("#stpartdate,#etpartdate").datepicker({ picker: "<button class='picker'></button>"});
+            // カレンダー表示
+            $("#stpartdate,#etpartdate").datepicker({ picker: "<button class='picker'></button>"});
             var cv =$("#colorvalue").val() ;
             if(cv=="")
             {
                 cv="-1";
             }
+            // 色表示
             $("#calendarcolor").colorselect({ title: "Color", index: cv, hiddenid: "colorvalue" });
             //to define parameters of ajaxform
             var options = {
@@ -141,9 +146,11 @@ if($_GET["id"]){
                 },
                 dataType: "json",
                 success: function(data) {
-                    alert(data.Msg);
                     if (data.IsSuccess) {
+                        alert("正常終了"); 
                         CloseModelWindow(null,true);  
+                    } else {
+                        alert("異常終了\r\n" + data.Msg);
                     }
                 }
             };
@@ -184,17 +191,17 @@ if($_GET["id"]){
     <div>      
       <div class="toolBotton">           
         <a id="Savebtn" class="imgbtn" href="javascript:void(0);">                
-          <span class="Save"  title="Save the calendar">Save(<u>S</u>)
+          <span class="Save"  title="Save the calendar">保存(<u>S</u>)
           </span>          
         </a>                           
         <?php if(isset($event)){ ?>
         <a id="Deletebtn" class="imgbtn" href="javascript:void(0);">                    
-          <span class="Delete" title="Cancel the calendar">Delete(<u>D</u>)
+          <span class="Delete" title="Cancel the calendar">削除(<u>D</u>)
           </span>                
         </a>             
         <?php } ?>            
         <a id="Closebtn" class="imgbtn" href="javascript:void(0);">                
-          <span class="Close" title="Close the window" >Close
+          <span class="Close" title="Close the window" >閉じる
           </span></a>            
         </a>        
       </div>                  
@@ -203,7 +210,7 @@ if($_GET["id"]){
       <div class="infocontainer">            
         <form action="php/datafeed.php?method=adddetails<?php echo isset($event)?"&id=".$event->Id:""; ?>" class="fform" id="fmEdit" method="post">                 
           <label>                    
-            <span>                        *Subject:              
+            <span>*件名:
             </span>                    
             <div id="calendarcolor">
             </div>
@@ -211,7 +218,7 @@ if($_GET["id"]){
             <input id="colorvalue" name="colorvalue" type="hidden" value="<?php echo isset($event)?$event->Color:"" ?>" />                
           </label>                 
           <label>                    
-            <span>*Time:
+            <span>*日時:
             </span>                    
             <div>  
               <?php
@@ -232,17 +239,17 @@ if($_GET["id"]){
               <input MaxLength="10" class="required date" id="etpartdate" name="etpartdate" style="padding-left:2px;width:90px;" type="text" value="<?php echo isset($earr[0])?$earr[0]:""; ?>" />
               <input MaxLength="50" class="required time" id="etparttime" name="etparttime" style="width:40px;" type="text" value="<?php echo isset($earr[1])?$earr[1]:""; ?>" />
               <label class="checkp"> 
-                <input id="IsAllDayEvent" name="IsAllDayEvent" type="checkbox" value="1" <?php if($all_day_event) {echo "checked";} ?>/>          All Day Event
+                <input id="IsAllDayEvent" name="IsAllDayEvent" type="checkbox" value="1" <?php if($all_day_event) {echo "checked";} ?>/>終日
               </label>                    
             </div>                
           </label>                 
           <label>                    
-            <span>                        Location:
+            <span>場所:
             </span>                    
             <input MaxLength="200" id="Location" name="Location" style="width:95%;" type="text" value="<?php echo isset($event)?$event->Location:""; ?>" />                 
           </label>                 
           <label>                    
-            <span>                        Remark:
+            <span>説明:
             </span>                    
 <textarea cols="20" id="Description" name="Description" rows="2" style="width:95%; height:70px">
 <?php echo isset($event)?$event->Description:""; ?>
