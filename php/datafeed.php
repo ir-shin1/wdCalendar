@@ -1,6 +1,7 @@
 <?php
 include_once("dbconfig.php");
 include_once("functions.php");
+include_once("mattermost_bot.php");
 
 function addCalendar($st, $et, $sub, $ade){
   $ret = array();
@@ -20,6 +21,7 @@ function addCalendar($st, $et, $sub, $ade){
       $ret['IsSuccess'] = true;
       $ret['Msg'] = 'add success';
       $ret['Data'] = $db->insertId();
+      mattermostBotPost($st, $sub, "add");
     }
     $db->disConnection();
   }catch(Exception $e){
@@ -51,6 +53,7 @@ function addDetailedCalendar($st, $et, $sub, $ade, $dscr, $loc, $color, $tz){
       $ret['IsSuccess'] = true;
       $ret['Msg'] = 'add success';
       $ret['Data'] = $db->insertId();
+      mattermostBotPost($st, $sub, "add");
     }
     $db->disConnection();
   }catch(Exception $e){
@@ -132,6 +135,14 @@ function updateCalendar($id, $st, $et){
   try{
     $db = new DBConnection();
     $db->getConnection();
+
+    $sql = "select * from `jqcalendar` where `id`=" . $id;
+    $handle = $db->query($sql);
+    // echo($sql);
+    while ($row = $db->fetchObject($handle)) {
+      $sub=$row->Subject;
+    }
+
     $sql = "update `jqcalendar` set"
       . " `starttime`='" . php2MySqlTime(js2PhpTime($st)) . "', "
       . " `endtime`='" . php2MySqlTime(js2PhpTime($et)) . "' "
@@ -143,6 +154,7 @@ function updateCalendar($id, $st, $et){
     }else{
       $ret['IsSuccess'] = true;
       $ret['Msg'] = 'Succefully';
+      mattermostBotPost($st, $sub, "update");
     }
   }catch(Exception $e){
      $ret['IsSuccess'] = false;
@@ -172,6 +184,7 @@ function updateDetailedCalendar($id, $st, $et, $sub, $ade, $dscr, $loc, $color, 
     }else{
       $ret['IsSuccess'] = true;
       $ret['Msg'] = 'Succefully';
+      mattermostBotPost($st, $sub, "update");
     }
   }catch(Exception $e){
      $ret['IsSuccess'] = false;
@@ -185,6 +198,15 @@ function removeCalendar($id){
   try{
     $db = new DBConnection();
     $db->getConnection();
+
+    $sql = "select * from `jqcalendar` where `id`=" . $id;
+    $handle = $db->query($sql);
+    // echo($sql);
+    while ($row = $db->fetchObject($handle)) {
+      $st=php2JsTime(mySql2PhpTime($row->StartTime));
+      $sub=$row->Subject;
+    }
+
     $sql = "delete from `jqcalendar` where `id`=" . $id;
     // echo($sql);
     if($db->query($sql)==false){
@@ -193,6 +215,7 @@ function removeCalendar($id){
     }else{
       $ret['IsSuccess'] = true;
       $ret['Msg'] = 'Succefully';
+      mattermostBotPost($st, $sub, "remove");
     }
   }catch(Exception $e){
      $ret['IsSuccess'] = false;
