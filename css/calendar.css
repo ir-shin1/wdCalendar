@@ -149,6 +149,12 @@ border-bottom:2px solid #c3d9ff;
 	cursor:default;
 	margin-right:10px;
 }
+.tg-bg-sta {
+        background-color:#F2F4FF
+}
+.tg-bg-sun {
+        background-color:#FFF2F5
+}
 .tg-today {
 	background-color:#ffc;
 }
@@ -402,6 +408,12 @@ border-bottom:2px solid #c3d9ff;
 }
 .st-bg {
 	border-left:1px solid #c3d9ff
+}
+.st-bg-sta {
+	background-color:#F2F4FF
+}
+.st-bg-sun {
+	background-color:#FFF2F5
 }
 .st-bg-today {
 	background-color:#ffc

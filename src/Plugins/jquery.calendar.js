@@ -730,7 +730,11 @@
                 // Today
                 if (istoday) {
                     ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-today\">&nbsp;</div>");
-                }
+                } else if ( i == 5 ) {
+                    ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-bg-sta\">&nbsp;</div>");
+                } else if ( i == 6 ) {
+                    ht.push("<div style=\"margin-bottom: -1008px; height:1008px\" class=\"tg-bg-sun\">&nbsp;</div>");
+                } 
                 //var eventC = $(eventWrap);
                 //onclick=\"javascript:FunProxy('rowhandler',event,this);\"
                 ht.push("<div  style=\"margin-bottom: -1008px; height: 1008px\" id='tgCol", i, "' class=\"tg-col-eventwrapper\">");
@@ -900,13 +904,16 @@
                     var day = C[j * 7 + i];
                     htb.push("<td abbr='", dateFormat.call(day, i18n.xgcalendar.dateformat.fulldayvalue), "' ch='qkadd' axis='00:00' title=''");
 
+                    htb.push(" class=\"st-bg ");
                     if (dateFormat.call(day, "yyyyMMdd") == dateFormat.call(new Date(), "yyyyMMdd")) {
-                        htb.push(" class=\"st-bg st-bg-today\">");
+                            htb.push(" st-bg-today");
                     }
-                    else {
-                        htb.push(" class=\"st-bg\">");
+                    if (i == 5 ) { // sta
+                        htb.push(" st-bg-sta");
+                    } else if ( i == 6 ) { // sun
+                        htb.push(" st-bg-sun");
                     }
-                    htb.push("&nbsp;</td>");
+                    htb.push("\">&nbsp;</td>");
                 }
                 //bgtable
                 htb.push("</tr></tbody></table>");
