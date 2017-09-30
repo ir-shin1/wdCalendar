@@ -42,8 +42,9 @@ $holiday = [ '2017-10-09' => '体育の日'       ,
 $db = new SQLite3('/var/lib/db/wdCalendar.db');
 
 foreach ( $holiday as $n => $t) {
-   $sql = "INSERT INTO `jqcalendar` (`subject`, `starttime`, `endtime`, `isalldayevent`, `holiday`) VALUES ('" .
-          $t . "','" . $n . " 00:00:00','" . $n . " 00:00:00', 1, 1);";
+   $sql = "INSERT INTO `jqcalendar` (`subject`, `starttime`, `endtime`, `isalldayevent`, `holiday`) SELECT " .
+             "'" . $t . "','" . $n . " 00:00:00','" . $n . " 00:00:00', 1, 1 WHERE 0 = (SELECT count(*) FROM `jqcalendar` " .
+          "WHERE `starttime` = '" .  $n . " 00:00:00' AND `isalldayevent` = 1 AND `holiday` = 1 );";
    echo $sql;
    echo "\n";
    $db->query( $sql );

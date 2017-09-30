@@ -1,6 +1,6 @@
 <?php
 
-  $sql = "CREATE TABLE `jqcalendar` (" .
+  $sql = "CREATE TABLE IF NOT EXISTS `jqcalendar` (" .
          " `Id`            INTEGER       PRIMARY KEY AUTOINCREMENT," .
          " `Subject`       varchar(1000) default NULL," .
          " `Location`      varchar(200)  default NULL," .
@@ -13,9 +13,13 @@
          " `RecurringRule` varchar(500)  default NULL" .
          ");";
 
+  $sql1 = "CREATE INDEX IF NOT EXISTS `stIDX` ON `jqcalendar` ( `StartTime` ) ;";
+
   $db = new SQLite3('/var/lib/db/wdCalendar.db');
 
   $db->query( $sql );
+
+  $db->query( $sql1 );
 
   $db->close();
 
