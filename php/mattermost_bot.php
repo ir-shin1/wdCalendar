@@ -9,11 +9,11 @@ function mattermostBotPost( $st, $sub, $op ) {
 
   $day = date("Y年m月d日", js2PhpTime( $st ));
   if ( $op == "add" ) {
-    $content = '{ "username" : $username , "text" : "' . $day . 'にスケジュールを追加 : ' . $sub . '"}';
+    $content = '{ "username" : "' . $username . '", "text" : "' . $day . 'にスケジュールを追加 : ' . $sub . '"}';
   } else if ( $op == "update" ) {
-    $content = '{ "username" : $username , "text" : "' . $day . 'のスケジュールを更新 : ' . $sub . '"}';
+    $content = '{ "username" : "' . $username . '", "text" : "' . $day . 'のスケジュールを更新 : ' . $sub . '"}';
   } else {
-    $content = '{ "username" : $username , "text" : "' . $day . 'のスケジュールを削除 : ' . $sub . '"}';
+    $content = '{ "username" : "' . $username . '", "text" : "' . $day . 'のスケジュールを削除 : ' . $sub . '"}';
   }
 
   $header = array(

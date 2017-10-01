@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+cd /var/www/html
+
+cp -p edit.db-ja.php edit.php
+cp -p sample-ja.php index.php
+cp -p php/dbconfig.php.sqlite php/dbconfig.php
+cp -p php/datafeed.db.php php/datafeed.php
+
+# Mastermost bot url define
+if [ -n "${MASTERMOST_BOT}" ] ; then
+   sed -i -e "s!\$url = \"\";!\$url = \"${MASTERMOST_BOT}\";!g" php/mattermost_bot.php
+fi
+
+cat php/mattermost_bot.php
+
+# Mastermost bot username
+if [ -n "${MASTERMOST_BOTNAME}" ] ; then
+   sed -i -e "s!\$username = \"[^\"]*\";!\$username = \"${MASTERMOST_BOTNAME}\";!g" php/mattermost_bot.php
+fi
+
+cat php/mattermost_bot.php
+
+chown -R www-data.www-data . /var/lib/db
+
+su -s /bin/sh www-data -c "php -f /var/www/html/setup-sqlite.php"
+su -s /bin/sh www-data -c "php -f /var/www/html/holiday.php"
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+   set -- apache2-foreground "$@"
+fi
+
+exec "$@"
